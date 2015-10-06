@@ -3,20 +3,20 @@ var EventEmitter = require("events").EventEmitter;
 var http = require("http");
 var util = require("util");
 
-function Profile(username) {
+function Profile(cityName) {
 
     EventEmitter.call(this);
 
     profileEmitter = this;
 
     //Connect to the API URL 
-    var request = http.get("http://api.openweathermap.org/data/2.5/weather?q=" + username + "={0bd8a796808e810c194ef49e822e726d}", function(response) {
+    var request = http.get("http://api.openweathermap.org/data/2.5/weather?q=" + cityName + "={0bd8a796808e810c194ef49e822e726d}", function(response) {
         var body = "";
 
         if (response.statusCode !== 200) {
             request.abort();
             //Status Code Error
-            profileEmitter.emit("error", new Error("There was an error getting the profile for " + username + ". (" + http.STATUS_CODES[response.statusCode] + ")"));
+            profileEmitter.emit("error", new Error("There was an error getting the profile for " + cityName + ". (" + http.STATUS_CODES[response.statusCode] + ")"));
         }
 
         //Read the data
