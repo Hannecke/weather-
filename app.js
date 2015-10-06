@@ -11,4 +11,4 @@ http.createServer(function (request, response) {
    
 }).listen(3000);
 
-console.log('Server running at http://<workspace_url>/');
+console.log('Server running at http://<_url>/');
