@@ -8,7 +8,7 @@ function home(request,response){
   //if url =="/" && GET
 
   if(request.url === '/'){
-    if(request.method.toLowerCase() === "get"){ // al cargar la pagina usamos metodo get 
+    if(request.method.toLowerCase() === "get"){ 
     
       response.writeHead(200, commonHeaders);
       views.view("index", {}, response);
@@ -20,24 +20,24 @@ function home(request,response){
     //get post
     request.on("data", function(postBody){
        console.log(postBody.toString());
-       var query = queryString.parse(postBody.toString()); //pasamos postBody de string a un object en query con querystring.parse
-       response.writeHead(303, {Location:"/" + query.cityName}); // 303 para cambiar de location y {Location: url}
+       var query = queryString.parse(postBody.toString()); 
+       response.writeHead(303, {Location:"/" + query.cityName}); 
        response.end();
     //redirect to /:username
     });   
   }  
  }
 }
-// handle http route GET /:USERNAME i.e. /marcoshanneckesteve
+
 function user(request, response){
  
   var username = request.url.replace("/", "");
   if(username.length > 0){
       response.writeHead(200, commonHeaders);
       //get JSON from weather API
-      var studentProfile = new Profile(username);
+      var weatherProfile = new Profile(username);
       
-      studentProfile.on("end", function(profileJSON){       
+      weatherProfile.on("end", function(profileJSON){       
         var values = {
           temperature: (profileJSON.main.temp - 273.15).toFixed(2),
           sky: profileJSON.weather[0].main,
@@ -51,11 +51,11 @@ function user(request, response){
           response.end('');
 
      }); 
-      studentProfile.on("error", function(error){
-      
-        response.end('Error\n'); 
-      //on "error"
+      weatherProfile.on("error", function(error){
+       //on "error"
         //show the error
+      response.end('Error\n'); 
+     
       }); 
 
   }
